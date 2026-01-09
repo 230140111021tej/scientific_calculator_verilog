@@ -1,142 +1,180 @@
-# Scientific Calculator
+# Scientific Calculator on FPGA (Vivado, Verilog)
 
-This repository contains the design and implementation of a Scientific Calculator using Vivado. The project demonstrates the use of hardware description languages (HDLs)—such as Verilog or VHDL—in developing and simulating a scientific calculator on FPGA hardware. The calculator supports basic arithmetic operations along with a selection of advanced mathematical functions typically found in a scientific calculator.
+This repository contains the design, simulation, and schematic visualization of a **scientific calculator** fully described in Verilog and engineered for FPGA implementation. The project was constructed and validated using **Xilinx Vivado**, with additional simulation using Icarus Verilog and GTKWave.
+
+---
 
 ## Table of Contents
 
-- [Overview](#overview)
+- [Project Overview](#project-overview)
 - [Features](#features)
-- [Project Structure](#project-structure)
-- [How to Run](#how-to-run)
-- [Vivado Implementation](#vivado-implementation)
-- [Screenshots / Simulation Results](#screenshots--simulation-results)
+- [Directory Structure](#directory-structure)
+- [Module Architecture](#module-architecture)
+- [Testbench](#testbench)
+- [Vivado & Simulation Results](#vivado--simulation-results)
+- [How to Run the Project](#how-to-run-the-project)
+- [Screenshots](#screenshots)
 - [License](#license)
 - [Acknowledgements](#acknowledgements)
 
 ---
 
-## Overview
+## Project Overview
 
-The Scientific Calculator project is a digital design implemented and simulated using Vivado Design Suite. The goal of the project is to provide hands-on experience in hardware programming for mathematical operations and to demonstrate the workflow from coding to simulation and synthesis in FPGA development environments.
+This project implements a sophisticated scientific calculator on FPGA, using Verilog HDL. It supports both **basic arithmetic** and a range of **scientific functions** (power, square, square root, trigonometric operations) through modular RTL, accompanied by a dedicated testbench. All development and waves, RTL schematics, and technology mappings were performed and visualized in Vivado, Icarus Verilog, and GTKWave.
 
-This calculator can handle a variety of operations such as addition, subtraction, multiplication, division, and may include advanced operations like exponentiation, trigonometric functions (sin, cos, tan), logarithmic functions, and square root (depending on your HDL implementation).
+---
 
 ## Features
 
-- **Basic Arithmetic Operations**  
-  - Addition (+)
-  - Subtraction (-)
-  - Multiplication (×)
-  - Division (÷)
+- **Arithmetic:** Addition, Subtraction, Multiplication, Division
+- **Scientific:** Power ($a^b$), Square, Square Root, Sine, Cosine, Tangent (with LUT-based fixed-point output)
+- **Combinational ALU** for bitwise operations (AND, OR, XOR, NOT)
+- **Testbench Driven:** Systematic verification for all supported operations
+- **Schematic Views:** RTL & technology schematics from Vivado
+- **Simulation Outputs:** Command-line and waveform visuals
 
-- **Advanced Functions**  
-  (Supported features may vary depending on your design)
-  - Exponentiation (x^y)
-  - Square root (√x)
-  - Trigonometric functions (sin, cos, tan)
-  - Logarithmic functions (log)
+---
 
-- **FPGA Implementation**  
-  - Written in HDL (Verilog/VHDL)
-  - Synthesizable for deployment on FPGA
-  - Testbench and simulation support
-
-- **Vivado Project**  
-  - Source files, constraints, simulation scripts compatible with Xilinx Vivado Design Suite.
-
-## Project Structure
+## Directory Structure
 
 ```
 scientific_calculator/
 │
-├── src/                  # HDL source files (Verilog/VHDL)
-├── tb/                   # Testbench files for simulation
-├── constraints/          # XDC (constraints) files
-├── simulation/           # Simulation outputs and scripts
-├── vivado_project/       # Vivado-specific project files
+├── Images/
+│   ├── Gtkwave_output.png
+│   ├── Iverilog_Output.png
+│   ├── RTL Schematic.png
+│   ├── Technology Scematic.png
+│   └── Vivado_output.png
+├── calc.v           # All functional modules
+├── testbench.v      # Automated testbench
+├── LICENSE.md
 └── README.md
 ```
 
-- **src/**: Contains the main calculator logic implemented in HDL.
-- **tb/**: Includes testbenches for verifying the functionality of individual modules and the overall calculator.
-- **constraints/**: Contains constraint files (.xdc) to map the design onto FPGA pins.
-- **simulation/**: May include scripts and result files generated during simulation.
-- **vivado_project/**: Vivado project files, such as project settings and logs.
+---
 
-## How to Run
+## Module Architecture
 
-### Prerequisites
+All logic is in `calc.v`.  
+Top-level module: `sc` (scientific calculator controller).
 
-- Xilinx Vivado Design Suite (version as per your implementation)
-- Compatible FPGA development board (e.g., Xilinx Spartan, Artix series)
-- Source files (provided in this repository)
+- **sc**: Connects all computation modules and selects output based on `op_code`.
+- **alu**: Arithmetic/bitwise logic (add, mul, sub, div, and, or, xor, not).
+- **square, sqrt**: Integer square and square root (for demo/perfect squares).
+- **power**: Modular exponentiation.
+- **trig_lut, trig_lut_cos, trig_lut_tan**: Simple fixed-point Look-Up Tables for trigonometric functions, mapping selected angles to scaled integer values for sine, cosine, tangent.
 
-### Steps
-
-1. **Clone the repository**
-
-    ```bash
-    git clone https://github.com/230140111021tej/scientific_calculator.git
-    cd scientific_calculator
-    ```
-
-2. **Open Vivado**
-
-    - Launch Vivado Design Suite.
-    - Create a new project or open the provided project in `vivado_project/`.
-
-3. **Add Source Files**
-
-    - Add the HDL source files from `src/` and testbenches from `tb/` to your project.
-
-4. **Set Up Constraints**
-
-    - Import constraint files from `constraints/` as per your FPGA board.
-
-5. **Synthesize and Implement**
-
-    - Run synthesis and implementation.
-    - Review any warnings or errors and resolve as necessary.
-
-6. **Simulation**
-
-    - Simulate your design using the testbenches.
-    - Review waveform outputs to verify correct functionality.
-
-7. **Generate Bitstream & Deploy**
-
-    - After successful implementation, generate the bitstream.
-    - Program your FPGA board using the generated bitstream.
-
-## Vivado Implementation
-
-This project was fully designed, simulated, and synthesized using Xilinx Vivado. The Vivado toolchain provides an integrated flow from RTL design entry and simulation to device programming.
-
-**Key Vivado tasks performed:**
-- RTL design entry using HDL
-- Functional and timing simulation
-- Synthesis and implementation targeting a specific FPGA
-- Timing analysis and resource utilization checking
-- Bitstream generation and hardware programming
-
-> **Note:** If any IP cores or additional Vivado-specific modules were used in the design, their details should be provided here along with instructions for their configuration.
-
-## Screenshots / Simulation Results
-
-<!-- If you have any waveform screenshots, simulation images, or hardware test photos, include them here. Example placeholder: -->
-```text
-[Insert Vivado simulation waveform screenshots or FPGA implementation photos here]
-```
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## Acknowledgements
-
-- Developed by [230140111021tej](https://github.com/230140111021tej)
-- Thanks to Xilinx for Vivado Design Suite and FPGA hardware documentation.
+#### Operation Select (`op_code`)
+| op_code | Operation         | Details                                 |
+|---------|-------------------|-----------------------------------------|
+| 0000    | Addition          | a + b                                   |
+| 0001    | Multiplication    | a * b                                   |
+| 0010    | Square            | a × a                                   |
+| 0011    | Square root       | sqrt(a), selected perfect squares       |
+| 0100    | Power             | a ^ b                                   |
+| 0101    | Sine              | angle, output scaled by 1000            |
+| 0110    | Cosine            | angle, output scaled by 1000            |
+| 0111    | Tangent           | angle, output scaled by 1000            |
 
 ---
 
-For questions or contributions, please submit an issue or pull request on GitHub.
+## Testbench
+
+The file `testbench.v` automates:
+
+- Stimulus for each supported operation
+- Multiple input combinations for functional coverage
+- Writes VCD files (`wave.vcd`) for waveform inspection
+- Console output matching every operation
+
+Sample simulation outputs:
+- **Console:**  
+  ```
+  Addition: 10 + 20 = 30
+  Multiplication: 7 * 6 = 42
+  ...
+  Sine: sin(30 deg) = 500 (scale 1000)
+  ```
+
+- **Waveforms:**  
+  View and analyze with GTKWave or Vivado (see screenshots below).
+
+---
+
+## Vivado & Simulation Results
+
+- **Icarus Verilog Output:**  
+  ![Icarus Verilog Output](Images/Iverilog_Output.png)
+
+- **GTKWave Output:**  
+  ![GTKWave Output](Images/Gtkwave_output.png)
+
+- **Vivado Output:**  
+  ![Vivado Output](Images/Vivado_output.png)
+
+- **Vivado RTL Schematic:**  
+  ![RTL Schematic](Images/RTL%20Schematic.png)
+
+- **Vivado Technology Schematic:**  
+  ![Technology Schematic](Images/Technology%20Scematic.png)
+
+*Use these visuals to validate the design's simulated, RTL, and hardware-mapped structure.*
+
+---
+
+## How to Run the Project
+
+### Prerequisites
+
+- Xilinx Vivado (for synthesizing/implementing and schematic views)
+- Icarus Verilog (`iverilog`), GTKWave (for open-source simulation/waveform)
+
+### 1. Clone Repo
+```sh
+git clone https://github.com/230140111021tej/scientific_calculator.git
+cd scientific_calculator
+```
+
+### 2. Simulate (Open-Source Flow)
+
+```sh
+iverilog -o sim_out testbench.v
+vvp sim_out
+gtkwave wave.vcd &
+```
+
+### 3. Simulate/Synthesize (Vivado)
+- Add `calc.v` and `testbench.v` as source/simulation files
+- Run behavioral simulation for waveform/console output
+- Run synthesis, implementation for hardware mapping
+- View **RTL Schematic** and **Technology Schematic** in the Vivado GUI
+
+---
+
+## Screenshots
+
+See the [Images](./Images/) directory for all result graphics:
+
+- Simulation results on both CLI and GTKWave
+- Vivado output console
+- RTL/Technology schematic captures
+
+---
+
+## License
+
+Licensed under the MIT License—see [LICENSE.md](LICENSE.md).
+
+---
+
+## Acknowledgements
+
+- Project: [230140111021tej](https://github.com/230140111021tej)
+- Tools: Xilinx Vivado, Icarus Verilog, GTKWave
+
+---
+
+**Issues, questions, or improvements?**  
+Feel free to open an issue or PR in this repo!
