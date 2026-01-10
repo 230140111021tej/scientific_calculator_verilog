@@ -1,6 +1,12 @@
-# Scientific Calculator on FPGA (Vivado, Verilog)
+# 🧮 Scientific Calculator on FPGA (Vivado, Verilog)
 
-This repository contains the design, simulation, and schematic visualization of a **scientific calculator** fully described in Verilog and engineered for FPGA implementation. The project was constructed and validated using **Xilinx Vivado**, with additional simulation using Icarus Verilog and GTKWave.
+This repository contains the design, simulation, and schematic visualization of a **scientific calculator** fully described in Verilog and engineered for FPGA implementation. The design was constructed and validated using **Xilinx Vivado**, with simulation using Icarus Verilog and GTKWave.
+
+---
+
+## At a Glance
+
+A modular, fully testbenched scientific calculator with arithmetic (add, sub, mul, div), scientific (power, square, sqrt, trig), and combinational logic (ALU) operations, all in Verilog HDL and ready for FPGA synthesis.
 
 ---
 
@@ -21,34 +27,34 @@ This repository contains the design, simulation, and schematic visualization of 
 
 ## Project Overview
 
-This project implements a sophisticated scientific calculator on FPGA, using Verilog HDL. It supports both **basic arithmetic** and a range of **scientific functions** (power, square, square root, trigonometric operations) through modular RTL, accompanied by a dedicated testbench. All development and waves, RTL schematics, and technology mappings were performed and visualized in Vivado, Icarus Verilog, and GTKWave.
+Implements a scientific calculator on FPGA using Verilog HDL. Supports both **basic arithmetic** and a range of **scientific functions** (power, square, square root, trigonometric operations) through modular RTL. All key development, validation, and waveform/RTL/technology views done using Vivado, Icarus Verilog, and GTKWave.
 
 ---
 
 ## Features
 
 - **Arithmetic:** Addition, Subtraction, Multiplication, Division
-- **Scientific:** Power ($a^b$), Square, Square Root, Sine, Cosine, Tangent (with LUT-based fixed-point output)
-- **Combinational ALU** for bitwise operations (AND, OR, XOR, NOT)
-- **Testbench Driven:** Systematic verification for all supported operations
-- **Schematic Views:** RTL & technology schematics from Vivado
-- **Simulation Outputs:** Command-line and waveform visuals
+- **Scientific:** Power (`a^b`), Square, Square Root, Sine, Cosine, Tangent (LUT-based, fixed-point)
+- **Combinational ALU:** Bitwise AND, OR, XOR, NOT
+- **Systematic Testbench:** Comprehensive verification
+- **RTL & Technology Schematics:** From Vivado
+- **Simulation Outputs:** CLI and waveform visuals
 
 ---
 
 ## Directory Structure
 
 ```
-scientific_calculator/
+scientific_calculator_verilog/
 │
 ├── Images/
 │   ├── Gtkwave_output.png
 │   ├── Iverilog_Output.png
 │   ├── RTL Schematic.png
-│   ├── Technology Scematic.png
+│   ├── Technology Scematic.png   # (RECOMMENDED: Rename to Technology Schematic.png)
 │   └── Vivado_output.png
-├── calc.v           # All functional modules
-├── testbench.v      # Automated testbench
+├── calc.v            # Source: All computation modules and top controller
+├── testbench.v       # Systematic testbench
 ├── LICENSE.md
 └── README.md
 ```
@@ -58,69 +64,75 @@ scientific_calculator/
 ## Module Architecture
 
 All logic is in `calc.v`.  
-Top-level module: `sc` (scientific calculator controller).
+**Top-level module:** `sc` (scientific calculator controller).
 
-- **sc**: Connects all computation modules and selects output based on `op_code`.
-- **alu**: Arithmetic/bitwise logic (add, mul, sub, div, and, or, xor, not).
-- **square, sqrt**: Integer square and square root (for demo/perfect squares).
-- **power**: Modular exponentiation.
-- **trig_lut, trig_lut_cos, trig_lut_tan**: Simple fixed-point Look-Up Tables for trigonometric functions, mapping selected angles to scaled integer values for sine, cosine, tangent.
+- **sc:** Top module (multi-op, multi-input select)
+- **alu:** Arithmetic/bitwise logic
+- **square/sqrt:** Integer square/root
+- **power:** Exponential calculation (integer only)
+- **trig_lut, trig_lut_cos, trig_lut_tan:** Fixed-point lookup for `sin`, `cos`, `tan`
 
 #### Operation Select (`op_code`)
-| op_code | Operation         | Details                                 |
-|---------|-------------------|-----------------------------------------|
-| 0000    | Addition          | a + b                                   |
-| 0001    | Multiplication    | a * b                                   |
-| 0010    | Square            | a × a                                   |
-| 0011    | Square root       | sqrt(a), selected perfect squares       |
-| 0100    | Power             | a ^ b                                   |
-| 0101    | Sine              | angle, output scaled by 1000            |
-| 0110    | Cosine            | angle, output scaled by 1000            |
-| 0111    | Tangent           | angle, output scaled by 1000            |
+| op_code | Operation         | Details                      |
+|---------|-------------------|------------------------------|
+| 0000    | Addition          | a + b                        |
+| 0001    | Multiplication    | a * b                        |
+| 0010    | Square            | a × a                        |
+| 0011    | Square root       | sqrt(a) (perfect squares)    |
+| 0100    | Power             | a ^ b                        |
+| 0101    | Sine              | angle, output ×1000          |
+| 0110    | Cosine            | angle, output ×1000          |
+| 0111    | Tangent           | angle, output ×1000          |
 
 ---
 
 ## Testbench
 
-The file `testbench.v` automates:
+`testbench.v` provides:
+- Stimulus for all operations
+- Checks for basic/scientific/trig functions
+- VCD generation for waveform
+- Console print of result for each test case
 
-- Stimulus for each supported operation
-- Multiple input combinations for functional coverage
-- Writes VCD files (`wave.vcd`) for waveform inspection
-- Console output matching every operation
-
-Sample simulation outputs:
-- **Console:**  
-  ```
-  Addition: 10 + 20 = 30
-  Multiplication: 7 * 6 = 42
-  ...
-  Sine: sin(30 deg) = 500 (scale 1000)
-  ```
-
-- **Waveforms:**  
-  View and analyze with GTKWave or Vivado (see screenshots below).
+Example Simulation Output:
+```
+Addition: 10 + 20 = 30
+Multiplication: 7 * 6 = 42
+...
+Sine: sin(30 deg) = 500 (scaled ×1000)
+```
 
 ---
 
 ## Vivado & Simulation Results
 
-- **Icarus Verilog Output:**  
-  ![Icarus Verilog Output](Images/Iverilog_Output.png)
+**Figure 1: Icarus Verilog Output**  
+![Icarus Verilog Output](Images/Iverilog_Output.png)
 
-- **GTKWave Output:**  
-  ![GTKWave Output](Images/Gtkwave_output.png)
+&nbsp;
 
-- **Vivado Output:**  
-  ![Vivado Output](Images/Vivado_output.png)
+**Figure 2: GTKWave Output**  
+![GTKWave Output](Images/Gtkwave_output.png)
 
-- **Vivado RTL Schematic:**  
-  ![RTL Schematic](Images/RTL%20Schematic.png)
+&nbsp;
 
-- **Vivado Technology Schematic:**  
-  ![Technology Schematic](Images/Technology%20Scematic.png)
+**Figure 3: Vivado Output**  
+![Vivado Output](Images/Vivado_output.png)
 
-*Use these visuals to validate the design's simulated, RTL, and hardware-mapped structure.*
+&nbsp;
+
+**Figure 4: Vivado RTL Schematic**  
+![RTL Schematic](Images/RTL%20Schematic.png)
+
+&nbsp;
+
+**Figure 5: Vivado Technology Schematic**  
+![Technology Schematic](Images/Technology%20Scematic.png)
+<!-- If filename renamed, update to Technology Schematic.png -->
+
+&nbsp;
+
+*These visuals validate all simulated and hardware-mapped operations.*
 
 ---
 
@@ -128,16 +140,17 @@ Sample simulation outputs:
 
 ### Prerequisites
 
-- Xilinx Vivado (for synthesizing/implementing and schematic views)
-- Icarus Verilog (`iverilog`), GTKWave (for open-source simulation/waveform)
+- Xilinx Vivado
+- Icarus Verilog, GTKWave
 
-### 1. Clone Repo
+### 1. Clone Repository
+
 ```sh
-git clone https://github.com/230140111021tej/scientific_calculator.git
-cd scientific_calculator
+git clone https://github.com/230140111021tej/scientific_calculator_verilog.git
+cd scientific_calculator_verilog
 ```
 
-### 2. Simulate (Open-Source Flow)
+### 2. Simulate (Open-Source)
 
 ```sh
 iverilog -o sim_out testbench.v
@@ -145,36 +158,38 @@ vvp sim_out
 gtkwave wave.vcd &
 ```
 
-### 3. Simulate/Synthesize (Vivado)
-- Add `calc.v` and `testbench.v` as source/simulation files
-- Run behavioral simulation for waveform/console output
-- Run synthesis, implementation for hardware mapping
-- View **RTL Schematic** and **Technology Schematic** in the Vivado GUI
+### 3. Vivado Flow
+
+- Add `calc.v` and `testbench.v` in Vivado as sources
+- Run behavioral simulation and synthesis
+- View output, RTL schematic, and technology schematic in GUI
 
 ---
 
 ## Screenshots
 
-See the [Images](./Images/) directory for all result graphics:
+All result images are found in [`Images/`](./Images/):
 
-- Simulation results on both CLI and GTKWave
-- Vivado output console
-- RTL/Technology schematic captures
+- **CLI & Waveform Simulation:**  
+  GTKWave & Icarus Verilog, shown in `Gtkwave_output.png` and `Iverilog_Output.png`
+- **Vivado Output:**  
+  `Vivado_output.png`
+- **Schematic Views:**  
+  `RTL Schematic.png`, `Technology Scematic.png`
 
 ---
 
 ## License
 
-Licensed under the MIT License—see [LICENSE.md](LICENSE.md).
+Licensed under the [MIT License](LICENSE.md).
 
 ---
 
 ## Acknowledgements
 
-- Project: [230140111021tej](https://github.com/230140111021tej)
+- [230140111021tej](https://github.com/230140111021tej)
 - Tools: Xilinx Vivado, Icarus Verilog, GTKWave
 
 ---
 
-**Issues, questions, or improvements?**  
-Feel free to open an issue or PR in this repo!
+_For questions or improvements, open an issue or PR in this repo!_
