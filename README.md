@@ -22,6 +22,7 @@ A modular, fully testbenched scientific calculator with arithmetic (add, sub, mu
 - [Screenshots](#screenshots)
 - [License](#license)
 - [Acknowledgements](#acknowledgements)
+- [Contact](#contact)
 
 ---
 
@@ -33,12 +34,12 @@ Implements a scientific calculator on FPGA using Verilog HDL. Supports both **ba
 
 ## Features
 
-- **Arithmetic:** Addition, Subtraction, Multiplication, Division
-- **Scientific:** Power (`a^b`), Square, Square Root, Sine, Cosine, Tangent (LUT-based, fixed-point)
-- **Combinational ALU:** Bitwise AND, OR, XOR, NOT
-- **Systematic Testbench:** Comprehensive verification
-- **RTL & Technology Schematics:** From Vivado
-- **Simulation Outputs:** CLI and waveform visuals
+- **Arithmetic:** Addition, Subtraction, Multiplication, Division  
+- **Scientific:** Power (`a^b`), Square, Square Root, Sine, Cosine, Tangent (LUT-based, fixed-point)  
+- **Combinational ALU:** Bitwise AND, OR, XOR, NOT  
+- **Systematic Testbench:** Comprehensive verification  
+- **RTL & Technology Schematics:** From Vivado  
+- **Simulation Outputs:** CLI and waveform visuals  
 
 ---
 
@@ -192,4 +193,11 @@ Licensed under the [MIT License](LICENSE.md).
 
 ---
 
-_For questions or improvements, open an issue or PR in this repo!_
+## Contact
+
+- **LinkedIn:** [Tejas R Mallah](https://www.linkedin.com/posts/tejas-r-mallah-28052b283_verilog-digitaldesign-vlsi-activity-7365287507430719489-yYqz?utm_source=share&utm_medium=member_desktop&rcm=ACoAAET0mcABoSmVvowkUz7qcSZkG2bhRVZnDQ4)
+- **Email:** tejasmallah@gmail.com
+
+---
+
+_For questions, suggestions, or collaboration—feel free to connect! I'm keen on FPGA, digital ASIC design, and VLSI projects._
