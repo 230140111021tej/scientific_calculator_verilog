@@ -52,7 +52,7 @@ scientific_calculator_verilog/
 │   ├── Gtkwave_output.png
 │   ├── Iverilog_Output.png
 │   ├── RTL Schematic.png
-│   ├── Technology Scematic.png   # (RECOMMENDED: Rename to Technology Schematic.png)
+│   ├── Technology Schematic.png   # (RECOMMENDED: Rename to Technology Schematic.png)
 │   └── Vivado_output.png
 ├── calc.v            # Source: All computation modules and top controller
 ├── testbench.v       # Systematic testbench
