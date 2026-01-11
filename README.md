@@ -128,7 +128,7 @@ Sine: sin(30 deg) = 500 (scaled ×1000)
 &nbsp;
 
 **Figure 5: Vivado Technology Schematic**  
-![Technology Schematic](Images/Technology%20Scematic.png)
+![Technology Schematic](Images/Technology%20Schematic.png)
 <!-- If filename renamed, update to Technology Schematic.png -->
 
 &nbsp;
@@ -163,7 +163,7 @@ gtkwave wave.vcd &
 
 - Add `calc.v` and `testbench.v` in Vivado as sources
 - Run behavioral simulation and synthesis
-- View output, RTL schematic, and technology schematic in GUI
+- View output, RTL schematic, and Technology Schematic in GUI
 
 ---
 
@@ -176,7 +176,13 @@ All result images are found in [`Images/`](./Images/):
 - **Vivado Output:**  
   `Vivado_output.png`
 - **Schematic Views:**  
-  `RTL Schematic.png`, `Technology Scematic.png`
+  `RTL Schematic.png`, `Technology Schematic.png`
+
+---
+
+> **Note:**  
+> This project has been verified through **behavioral simulation and Vivado synthesis**.  
+> The design is **FPGA-ready**, but was **not deployed on a physical FPGA board**.
 
 ---
 
