@@ -1,4 +1,4 @@
-// Single file for scientific calculator modules
+// Scientific calculator modules
 
 module alu (
     input wire [15:0] a,
